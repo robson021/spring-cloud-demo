@@ -27,7 +27,7 @@ public class WeatherController {
     }
 
     @GetMapping("/{city}")
-    public City getWeather(@PathVariable("city") String city) {
+    public City getWeather(@PathVariable String city) {
         log.info("Request for weather conditions in city: {}", city);
         if (!city.equalsIgnoreCase("Moscow"))
             throw new UnsupportedCityException();
