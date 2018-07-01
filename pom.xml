@@ -39,5 +39,6 @@
     <modules>
         <module>config-server</module>
         <module>eureka-server</module>
+        <module>weather-service</module>
     </modules>
 </project>
