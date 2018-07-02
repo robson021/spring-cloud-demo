@@ -40,5 +40,6 @@
         <module>config-server</module>
         <module>eureka-server</module>
         <module>weather-service</module>
+        <module>currency-service</module>
     </modules>
 </project>
