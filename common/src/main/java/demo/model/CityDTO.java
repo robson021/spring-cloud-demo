@@ -1,6 +1,6 @@
 package demo.model;
 
-public class City {
+public class CityDTO {
 
     private int id;
 

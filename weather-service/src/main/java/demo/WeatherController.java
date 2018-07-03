@@ -1,7 +1,7 @@
 package demo;
 
-import demo.model.City;
-import demo.model.WeatherInfo;
+import demo.model.CityDTO;
+import demo.model.WeatherDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
@@ -27,20 +27,28 @@ public class WeatherController {
     }
 
     @GetMapping("/{city}")
-    public City getWeather(@PathVariable String city) {
+    public CityDTO getWeather(@PathVariable String city) {
         log.info("Request for weather conditions in city: {}", city);
+
         if (!city.equalsIgnoreCase("Moscow"))
             throw new UnsupportedCityException();
 
-        City cityResponse = restTemplate.exchange(moscowWeatherUrl, HttpMethod.GET, null, WeatherInfo.class)
-                .getBody()
-                .getCity();
+        WeatherDTO body = restTemplate //
+                .exchange(moscowWeatherUrl, HttpMethod.GET, null, WeatherDTO.class)
+                .getBody();
 
-        log.info("Received data for city: {}", cityResponse.getName());
-        return cityResponse;
+        if (body == null)
+            throw new CityNotFoundException();
+
+        log.info("Received data for city: {}", body.getCity().getName());
+        return body.getCity();
     }
 
     @ResponseStatus(value = HttpStatus.NOT_IMPLEMENTED, reason = "Sorry, given city is currently not supported")
     private class UnsupportedCityException extends RuntimeException {
+    }
+
+    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "City not found")
+    private class CityNotFoundException extends RuntimeException {
     }
 }

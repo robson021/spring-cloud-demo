@@ -1,5 +1,5 @@
 :: build all modules
-call mvnw.cmd clean package -DskipTests
+call mvnw.cmd clean compile
 :: fail on maven error
 if %errorlevel% neq 0 exit /b %errorlevel%
 :: run all apps
