@@ -11,3 +11,5 @@ start cmd /c mvnw.cmd spring-boot:run -pl weather-service
 start cmd /c mvnw.cmd spring-boot:run -pl weather-service
 start cmd /c mvnw.cmd spring-boot:run -pl currency-service
 start cmd /c mvnw.cmd spring-boot:run -pl currency-service
+timeout 5
+start cmd /c mvnw.cmd spring-boot:run -pl info-service
