@@ -7,15 +7,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
-public class MainController {
+public class TestController {
 
-    private static final Logger log = LoggerFactory.getLogger(MainController.class);
+    private static final Logger log = LoggerFactory.getLogger(TestController.class);
 
     private final CurrencyServiceProxy currencyServiceProxy;
 
     @SuppressWarnings("all")
-    public MainController(CurrencyServiceProxy currencyServiceProxy) {
+    public TestController(CurrencyServiceProxy currencyServiceProxy) {
         this.currencyServiceProxy = currencyServiceProxy;
     }
 

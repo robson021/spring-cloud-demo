@@ -12,6 +12,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <common.version>1.0-SNAPSHOT</common.version>
+        <modelmapper.version>0.7.4</modelmapper.version>
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -43,6 +44,7 @@
         <module>eureka-server</module>
         <module>info-service</module>
         <module>weather-service</module>
+        <module>country-service</module>
         <module>currency-service</module>
     </modules>
 </project>
