@@ -27,7 +27,11 @@ public class CountryServiceController {
         log.info("Request for capital city: {}", capitalCity);
         CountryEntity entity = repository  //
                 .findByCapitalCityContainingIgnoreCase(capitalCity)
-                .orElseThrow(CountryNotFoundException::new);
+                .orElseThrow(() -> {
+                    log.warn("Could not found any country with capital city matching pattern: {}", capitalCity);
+                    return new CountryNotFoundException();
+                });
+        log.info("Found: {}", entity);
         return modelMapper.map(entity, CountryDTO.class);
     }
 

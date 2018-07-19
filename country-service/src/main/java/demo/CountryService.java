@@ -17,7 +17,8 @@ public class CountryService {
     public CommandLineRunner runner(CountryRepository repository) {
         return args -> {
             List<CountryEntity> countries = Stream.of(  //
-                    new CountryEntity("United States of America", "Washington DC", "USD"), new CountryEntity("Great Britain", "London", "GBP"),
+                    new CountryEntity("United States of America", "Washington DC", "USD"),
+                    new CountryEntity("Great Britain", "London", "GBP"),
                     new CountryEntity("Poland", "Warsaw", "PLN"))
                     .collect(Collectors.toList());
             repository.saveAll(countries);
