@@ -5,6 +5,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Objects;
+
 @Document
 public class CountryEntity {
 
@@ -48,7 +50,25 @@ public class CountryEntity {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CountryEntity that = (CountryEntity) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
     public String toString() {
-        return "CountryEntity{" + "id=" + id + ", name='" + name + '\'' + ", capitalCity='" + capitalCity + '\'' + ", currency='" + currency + '\'' + '}';
+        return "CountryEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", capitalCity='" + capitalCity + '\'' +
+                ", currency='" + currency + '\'' +
+                '}';
     }
 }

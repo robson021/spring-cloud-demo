@@ -4,7 +4,9 @@ import demo.model.CountryDTO;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -33,6 +35,14 @@ public class CountryServiceController {
                 });
         log.info("Found: {}", entity);
         return modelMapper.map(entity, CountryDTO.class);
+    }
+
+    @ExceptionHandler({IncorrectResultSizeDataAccessException.class})
+    public ResponseEntity<?> handleSearchExceptions(Exception e) {
+        log.error(e.getMessage());
+        return ResponseEntity //
+                .status(HttpStatus.BAD_REQUEST)
+                .body("More than one result has been found");
     }
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Country not found")
