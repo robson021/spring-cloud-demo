@@ -6,26 +6,28 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @SpringBootApplication
 public class CountryService {
 
     @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
+    public CommandLineRunner runner(CountryRepository repository) {
+        return args -> {
+            List<CountryEntity> countries = Stream.of(  //
+                    new CountryEntity("United States of America", "Washington DC", "USD"), new CountryEntity("Great Britain", "London", "GBP"),
+                    new CountryEntity("Poland", "Warsaw", "PLN"))
+                    .collect(Collectors.toList());
+            repository.saveAll(countries);
+            repository.findAll().forEach(System.out::println);
+        };
     }
 
     @Bean
-    public CommandLineRunner runner(CountryRepository repository) {
-        return args -> {
-            Stream.of(  //
-                    new CountryEntity("United States of America", "Washington DC", "USD"),
-                    new CountryEntity("Great Britain", "London", "GBP"),
-                    new CountryEntity("Poland", "Warsaw", "PLN"))
-                    .forEach(repository::save);
-            repository.findAll().forEach(System.out::println);
-        };
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 
     public static void main(String[] args) {

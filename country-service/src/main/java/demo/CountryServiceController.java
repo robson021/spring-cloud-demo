@@ -4,10 +4,8 @@ import demo.model.CountryDTO;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/country-info")
@@ -27,7 +25,13 @@ public class CountryServiceController {
     @GetMapping("/{capitalCity}")
     public CountryDTO getCountryInfo(@PathVariable String capitalCity) {
         log.info("Request for capital city: {}", capitalCity);
-        CountryEntity entity = repository.findByCapitalCityContainingIgnoreCase(capitalCity);
+        CountryEntity entity = repository  //
+                .findByCapitalCityContainingIgnoreCase(capitalCity)
+                .orElseThrow(CountryNotFoundException::new);
         return modelMapper.map(entity, CountryDTO.class);
+    }
+
+    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Country not found")
+    private class CountryNotFoundException extends RuntimeException {
     }
 }
