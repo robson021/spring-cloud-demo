@@ -7,10 +7,10 @@ start cmd /c mvnw.cmd spring-boot:run -pl config-server
 timeout 4
 start cmd /c mvnw.cmd spring-boot:run -pl eureka-server
 timeout 7
-::start cmd /c mvnw.cmd spring-boot:run -pl weather-service
-::start cmd /c mvnw.cmd spring-boot:run -pl weather-service
-::start cmd /c mvnw.cmd spring-boot:run -pl currency-service
-::start cmd /c mvnw.cmd spring-boot:run -pl currency-service
+start cmd /c mvnw.cmd spring-boot:run -pl weather-service
+start cmd /c mvnw.cmd spring-boot:run -pl weather-service
+start cmd /c mvnw.cmd spring-boot:run -pl currency-service
+start cmd /c mvnw.cmd spring-boot:run -pl currency-service
 start cmd /c mvnw.cmd spring-boot:run -pl country-service
-::timeout 5
-::start cmd /c mvnw.cmd spring-boot:run -pl info-service
+timeout 7
+start cmd /c mvnw.cmd spring-boot:run -pl info-service
