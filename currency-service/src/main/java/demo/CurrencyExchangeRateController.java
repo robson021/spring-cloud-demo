@@ -41,8 +41,11 @@ public class CurrencyExchangeRateController {
     @ExceptionHandler({Exception.class})
     public ResponseEntity<?> handleAllExceptions(Exception e) {
         log.error(e.getMessage());
+        CurrencyExchangeDTO dto = new CurrencyExchangeDTO();
+        dto.setCode("???");
+        dto.setCurrency("???");
         return ResponseEntity //
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(e.getMessage());
+                .body(dto);
     }
 }
