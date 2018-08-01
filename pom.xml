@@ -47,5 +47,6 @@
         <module>weather-service</module>
         <module>country-service</module>
         <module>currency-service</module>
+        <module>gateway</module>
     </modules>
 </project>
