@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/country-info")
 public class CountryServiceController {
@@ -22,6 +24,11 @@ public class CountryServiceController {
     public CountryServiceController(CountryRepository repository, ModelMapper modelMapper) {
         this.repository = repository;
         this.modelMapper = modelMapper;
+    }
+
+    @GetMapping("/all-countries")
+    public List<CountryEntity> test() {
+        return repository.findAll();
     }
 
     @GetMapping("/{capitalCity}")

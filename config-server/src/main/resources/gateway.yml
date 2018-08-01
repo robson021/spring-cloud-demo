@@ -14,11 +14,11 @@ spring:
         uri: lb://country-service
         predicates:
         - Path=/country-info/**
-      - id: /weather-service
+      - id: weather-service
         uri: lb:///weather-service
         predicates:
         - Path=/weather/**
-      - id: /info-service
+      - id: info-service
         uri: lb:///info-service
         predicates:
         - Path=/info/**

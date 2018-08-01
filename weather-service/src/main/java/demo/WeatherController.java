@@ -26,6 +26,11 @@ public class WeatherController {
         log.info("moscow-weather-url: {}", moscowWeatherUrl);
     }
 
+    @GetMapping("/test")
+    public CityDTO test() {
+        return this.getWeather("Moscow");
+    }
+
     @GetMapping("/{city}")
     public CityDTO getWeather(@PathVariable String city) {
         log.info("Request for weather conditions in city: {}", city);
