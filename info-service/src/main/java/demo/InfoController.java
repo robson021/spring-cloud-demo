@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/info-service")
+@RequestMapping("/info")
 public class InfoController {
 
     private static final Logger log = LoggerFactory.getLogger(InfoController.class);
@@ -23,6 +23,16 @@ public class InfoController {
     public InfoController(CountryServiceProxy countryServiceProxy, CurrencyServiceProxy currencyServiceProxy) {
         this.countryServiceProxy = countryServiceProxy;
         this.currencyServiceProxy = currencyServiceProxy;
+    }
+
+    @RequestMapping("/test")
+    public CountryAndCurrencyDTO test() {
+        log.info("Test endpoint request");
+        CountryDTO country = countryServiceProxy.getCountryInfo("washington");
+        log.info("Found country: {}", country);
+        CurrencyExchangeDTO exchangeRates = currencyServiceProxy.getExchangeRates(country.getCurrency());
+        log.info("Found exchange rates: {}", exchangeRates);
+        return new CountryAndCurrencyDTO(country, exchangeRates);
     }
 
     @GetMapping("/country/{capitalCity}")

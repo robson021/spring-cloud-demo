@@ -29,6 +29,11 @@ public class CurrencyExchangeRateController {
         log.info("currency token: {}", currencyToken);
     }
 
+    @GetMapping("/test")
+    public CurrencyExchangeDTO test() {
+        return this.getExchangeRates("usd");
+    }
+
     @GetMapping("/{currency}")
     public CurrencyExchangeDTO getExchangeRates(@PathVariable String currency) {
         log.info("Request for exchange rates of currency: {}", currency);
