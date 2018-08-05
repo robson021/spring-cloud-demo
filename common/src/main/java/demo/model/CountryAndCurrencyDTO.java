@@ -29,4 +29,12 @@ public class CountryAndCurrencyDTO {
     public void setCurrencyExchange(CurrencyExchangeDTO currencyExchange) {
         this.currencyExchange = currencyExchange;
     }
+
+    @Override
+    public String toString() {
+        return "CountryAndCurrencyDTO{" +
+                "country=" + country +
+                ", currencyExchange=" + currencyExchange +
+                '}';
+    }
 }

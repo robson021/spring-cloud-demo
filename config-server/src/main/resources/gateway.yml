@@ -15,10 +15,10 @@ spring:
         predicates:
         - Path=/country-info/**
       - id: weather-service
-        uri: lb:///weather-service
+        uri: lb://weather-service
         predicates:
         - Path=/weather/**
       - id: info-service
-        uri: lb:///info-service
+        uri: lb://info-service
         predicates:
         - Path=/info/**

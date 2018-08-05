@@ -27,18 +27,15 @@ public class InfoController {
 
     @RequestMapping("/test")
     public CountryAndCurrencyDTO test() {
-        log.info("Test endpoint request");
-        CountryDTO country = countryServiceProxy.getCountryInfo("washington");
-        log.info("Found country: {}", country);
-        CurrencyExchangeDTO exchangeRates = currencyServiceProxy.getExchangeRates(country.getCurrency());
-        log.info("Found exchange rates: {}", exchangeRates);
-        return new CountryAndCurrencyDTO(country, exchangeRates);
+        return this.getCountryInfo("washington");
     }
 
     @GetMapping("/country/{capitalCity}")
     public CountryAndCurrencyDTO getCountryInfo(@PathVariable String capitalCity) {
         CountryDTO country = countryServiceProxy.getCountryInfo(capitalCity);
+        log.info("Received info about country with capital city '{}': {}", capitalCity, country);
         CurrencyExchangeDTO exchangeRates = currencyServiceProxy.getExchangeRates(country.getCurrency());
+        log.info("Received exchange rates for country '{}' and currency '{}'", country.getName(), exchangeRates.getCode());
         return new CountryAndCurrencyDTO(country, exchangeRates);
     }
 
