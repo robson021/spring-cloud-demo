@@ -1,6 +1,6 @@
 call mvnw.cmd clean
 call mvnw.cmd install -DskipTests -pl common
-call mvnw.cmd package
+call mvnw.cmd package -DskipTests
 if %errorlevel% neq 0 exit /b %errorlevel%
 :: run all apps
 start cmd /c mvnw.cmd spring-boot:run -pl config-server
