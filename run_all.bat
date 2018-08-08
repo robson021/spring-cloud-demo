@@ -1,4 +1,6 @@
-call mvnw.cmd clean install -DskipTests
+call mvnw.cmd clean
+call mvnw.cmd install -DskipTests -pl common
+call mvnw.cmd package
 if %errorlevel% neq 0 exit /b %errorlevel%
 :: run all apps
 start cmd /c mvnw.cmd spring-boot:run -pl config-server
@@ -11,6 +13,6 @@ start cmd /c mvnw.cmd spring-boot:run -pl currency-service
 timeout 3
 start cmd /c mvnw.cmd spring-boot:run -pl country-service
 timeout 3
-start cmd /c mvnw.cmd spring-boot:run -pl info-service
+::start cmd /c mvnw.cmd spring-boot:run -pl info-service
 timeout 25
 start cmd /c mvnw.cmd spring-boot:run -pl gateway

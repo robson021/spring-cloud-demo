@@ -23,8 +23,9 @@ public class CountryService {
                     new CountryEntity("Great Britain", "London", "GBP"),
                     new CountryEntity("Poland", "Warsaw", "PLN"))
                     .collect(Collectors.toList());
-            repository.saveAll(countries);
-            repository.findAll().forEach(System.out::println);
+
+            repository.saveAll(countries)
+                    .subscribe(System.out::println);
         };
     }
 
