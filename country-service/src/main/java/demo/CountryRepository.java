@@ -1,9 +1,8 @@
 package demo;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
+import reactor.core.publisher.Mono;
 
-import java.util.Optional;
-
-public interface CountryRepository extends MongoRepository<CountryEntity, Long> {
-    Optional<CountryEntity> findByCapitalCityContainingIgnoreCase(String capitalCity);
+public interface CountryRepository extends ReactiveMongoRepository<CountryEntity, Long> {
+    Mono<CountryEntity> findByCapitalCityContainingIgnoreCase(String capitalCity);
 }

@@ -4,10 +4,12 @@ import demo.model.CurrencyExchangeDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/currency-exchange")
@@ -19,38 +21,29 @@ public class CurrencyExchangeRateController {
 
     private final String currencyToken;
 
-    private final RestTemplate restTemplate;
+    private final WebClient webClient;
 
-    public CurrencyExchangeRateController(Environment env, RestTemplate restTemplate) {
+    public CurrencyExchangeRateController(Environment env, WebClient webClient) {
         this.currencyExchangeUrl = env.getProperty("currency-exchange-url");
         this.currencyToken = env.getProperty("currency-token");
-        this.restTemplate = restTemplate;
+        this.webClient = webClient;
         log.info("currency exchange url: {}", currencyExchangeUrl);
         log.info("currency token: {}", currencyToken);
     }
 
     @GetMapping("/test")
-    public CurrencyExchangeDTO test() {
+    public Mono<CurrencyExchangeDTO> test() {
         return this.getExchangeRates("usd");
     }
 
     @GetMapping("/{currency}")
-    public CurrencyExchangeDTO getExchangeRates(@PathVariable String currency) {
+    public Mono<CurrencyExchangeDTO> getExchangeRates(@PathVariable String currency) {
         log.info("Request for exchange rates of currency: {}", currency);
         String url = currencyExchangeUrl.replace(currencyToken, currency);
-        return restTemplate //
-                .getForEntity(url, CurrencyExchangeDTO.class)
-                .getBody();
+        return webClient.get()
+                .uri(url)
+                .retrieve()
+                .bodyToMono(CurrencyExchangeDTO.class);
     }
 
-    @ExceptionHandler({Exception.class})
-    public ResponseEntity<?> handleAllExceptions(Exception e) {
-        log.error(e.getMessage());
-        CurrencyExchangeDTO dto = new CurrencyExchangeDTO();
-        dto.setCode("???");
-        dto.setCurrency("???");
-        return ResponseEntity //
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(dto);
-    }
 }

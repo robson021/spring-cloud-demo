@@ -18,11 +18,10 @@ public class Gateway {
         SpringApplication.run(Gateway.class, args);
     }
 
-    private static final Logger log = LoggerFactory.getLogger("ExceptionHandler");
-
     @Bean
     @Order(0)
     public WebExceptionHandler responseStatusExceptionHandler() {
+        final Logger log = LoggerFactory.getLogger("ExceptionHandler");
         return (serverWebExchange, throwable) -> {
             log.error(throwable.getMessage());
             return Mono.empty();
